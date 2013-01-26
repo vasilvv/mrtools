@@ -167,7 +167,7 @@ def setup_subcommands(argparser, subparsers):
 	parser_inverse.add_argument('member', help = 'The name of the list to show information about')
 	parser_inverse.add_argument('-r', '--recursive', action = 'store_true', help = 'Show the lists into which a member is included through other lists')
 
-	parser_members = subparsers.add_parser('members', aliases=('mem',), help = 'Shows the members explicitly included into the list')
+	parser_members = subparsers.add_parser('members', help = 'Shows the members explicitly included into the list')
 	parser_members.add_argument('list', help = 'The name of the list to show information about')
 	parser_members.add_argument('-v', '--verbose', action = 'store_true', help = 'Output explicitly the members of the list')
 
