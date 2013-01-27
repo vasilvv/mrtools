@@ -111,7 +111,7 @@ def expand_list():
 
 			# List tracer includes lists by default
 			if not args.include_lists:
-					lists = [mlist for mlist in lists if mlist.type != ListMember.List]
+					members = [member for member in members if member.mtype != ListMember.List]
 		else:
 			members, inaccessible, lists = mlist.getAllMembers(include_lists = args.include_lists)
 		
