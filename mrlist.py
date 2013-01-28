@@ -146,6 +146,13 @@ def remove_member():
     mlist.removeMember(member)
     print "Removed %s from list %s" % (common.emph_text( str(member) ), common.emph_text( mlist.name ))
 
+def rename_list():
+    """Handle 'mrlist rename'."""
+
+    mlist = List(client, args.old_name)
+    mlist.rename(args.new_name)
+    print "Successfully renamed %s to %s" % (args.old_name, args.new_name)
+
 def setup_subcommands(argparser, subparsers):
     """Sets up all the subcommands."""
 
@@ -175,12 +182,17 @@ def setup_subcommands(argparser, subparsers):
     parser_remove.add_argument('list', help = 'The list from which the member will be removed')
     parser_remove.add_argument('member', help = 'The member to remove from the list')
 
+    parser_rename = subparsers.add_parser('rename', help = 'Rename a list')
+    parser_rename.add_argument('old_name')
+    parser_rename.add_argument('new_name')
+
     parser_add.set_defaults(handler = add_member)
     parser_expand.set_defaults(handler = expand_list)
     parser_info.set_defaults(handler = show_info)
     parser_inverse.set_defaults(handler = show_inverse)
     parser_members.set_defaults(handler = show_members)
     parser_remove.set_defaults(handler = remove_member)
+    parser_rename.set_defaults(handler = rename_list)
 
 if __name__ == '__main__':
     client, args = common.init('mrlist', 'Inspect and modify Moira lists', setup_subcommands)
