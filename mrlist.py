@@ -19,10 +19,10 @@ def resolve_member(name, default_to_string):
     if member:
         return member
     if re.match( "^[a-z0-9_]{3,8}.(root|extra|dbadmin)$", name ):
-        return ListMember( client, MoiraListMember.Kerberos, name + '@ATHENA.MIT.EDU' )
+        return ListMember( client, ListMember.Kerberos, name + '@ATHENA.MIT.EDU' )
     
     if default_to_string:
-        return ListMember( client, MoiraListMember.String, name )
+        return ListMember( client, ListMember.String, name )
     else:
         return None
 
@@ -133,7 +133,7 @@ def expand_list():
 def add_member():
     """Handle 'mrlist add'."""
 
-    mlist = List(client.client, args.list)
+    mlist = List(client, args.list)
     member = resolve_member(args.member, True)
     mlist.addMember(member)
     print "Added %s to list %s" % (common.emph_text( str(member) ), common.emph_text( mlist.name ))
@@ -141,7 +141,7 @@ def add_member():
 def remove_member():
     """Handle 'mrlist remove'."""
 
-    mlist = List(client.client, args.list)
+    mlist = List(client, args.list)
     member = resolve_member(args.member, True)
     mlist.removeMember(member)
     print "Removed %s from list %s" % (common.emph_text( str(member) ), common.emph_text( mlist.name ))
