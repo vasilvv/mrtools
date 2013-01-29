@@ -195,6 +195,32 @@ def set_desc():
     mlist = List(client, args.list)
     mlist.setDescription(args.description)
 
+def set_owner():
+    """Handles 'mrlist setowner'."""
+
+    mlist = List(client, args.list)
+    new_owner = resolve_member(args.owner, False)
+    if not new_owner:
+        raise UserError('Unable to determine owner type')
+
+    mlist.setOwner(new_owner)
+    print "Successfully changed owner of list %s to %s" % (common.emph_text(args.list), common.emph_text(str(new_owner)))
+
+def set_memacl():
+    """Handles 'mrlist setmemacl'."""
+
+    mlist = List(client, args.list)
+    if args.memacl.lower() == 'none':
+        new_memacl = None
+    else:
+        new_memacl = resolve_member(args.memacl, False)
+        if not new_memacl:
+            print 'Unable to determine memacl type'
+            return
+
+    mlist.setMembershipACL(new_memacl)
+    print "Successfully changed membership ACL of list %s to %s" % (common.emph_text(args.list), common.emph_text(str(new_memacl)))
+
 def setup_subcommands(argparser, subparsers):
     """Sets up all the subcommands."""
 
@@ -236,6 +262,14 @@ def setup_subcommands(argparser, subparsers):
     parser_setdesc.add_argument('list', help = 'List to change the description of')
     parser_setdesc.add_argument('description', help = 'New list description')
 
+    parser_setowner = subparsers.add_parser('setowner', help = 'Change the ownership of the list')
+    parser_setowner.add_argument('list', help = 'List to change ownership of')
+    parser_setowner.add_argument('owner', help = 'The new owner')
+
+    parser_setmemacl = subparsers.add_parser('setmemacl', help = 'Change the membership ACL of the list')
+    parser_setmemacl.add_argument('list', help = 'List to change membership of')
+    parser_setmemacl.add_argument('memacl', help = 'New membership ACL')
+
     parser_add.set_defaults(handler = add_member)
     parser_expand.set_defaults(handler = expand_list)
     parser_info.set_defaults(handler = show_info)
@@ -245,6 +279,8 @@ def setup_subcommands(argparser, subparsers):
     parser_rename.set_defaults(handler = rename_list)
     parser_set.set_defaults(handler = set_flags)
     parser_setdesc.set_defaults(handler = set_desc)
+    parser_setowner.set_defaults(handler = set_owner)
+    parser_setmemacl.set_defaults(handler = set_memacl)
 
 if __name__ == '__main__':
     client, args = common.init('mrlist', 'Inspect and modify Moira lists', setup_subcommands)
