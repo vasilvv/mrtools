@@ -153,6 +153,42 @@ def rename_list():
     mlist.rename(args.new_name)
     print "Successfully renamed %s to %s" % (args.old_name, args.new_name)
 
+def set_flags():
+    """Handle 'mrlist set'."""
+
+    mlist = List(client, args.list)
+
+    valid_flags = ('active', 'inactive', 'public', 'private', 'visible', 'hidden', 'mailing', 'non-mailing', 'afs', 'non-afs', 'nfs', 'non-nfs')
+    for flag in args.flag:
+        if flag not in valid_flags:
+            print "Invalid list flag: %s" % flag
+
+    for flag in args.flag:
+        if flag == 'active':
+            mlist.setActiveFlag(True)
+        if flag == 'inactive':
+            mlist.setActiveFlag(False)
+        if flag == 'public':
+            mlist.setPublicFlag(True)
+        if flag == 'private':
+            mlist.setPublicFlag(False)
+        if flag == 'visible':
+            mlist.setHiddenFlag(False)
+        if flag == 'hidden':
+            mlist.setHiddenFlag(True)
+        if flag == 'mailing':
+            mlist.setMailingListFlag(True)
+        if flag == 'non-mailing':
+            mlist.setMailingListFlag(False)
+        if flag == 'afs':
+            mlist.setAFSGroupFlag(True)
+        if flag == 'non-afs':
+            mlist.setAFSGroupFlag(False)
+        if flag == 'nfs':
+            mlist.setNFSGroupFlag(True)
+        if flag == 'non-nfs':
+            mlist.setNFSGroupFlag(False)
+
 def setup_subcommands(argparser, subparsers):
     """Sets up all the subcommands."""
 
@@ -186,6 +222,10 @@ def setup_subcommands(argparser, subparsers):
     parser_rename.add_argument('old_name')
     parser_rename.add_argument('new_name')
 
+    parser_set = subparsers.add_parser('set', help = 'Change list options')
+    parser_set.add_argument('list', help = 'List to change the flags of')
+    parser_set.add_argument('flag', nargs = '+', help = 'Flags to set')
+
     parser_add.set_defaults(handler = add_member)
     parser_expand.set_defaults(handler = expand_list)
     parser_info.set_defaults(handler = show_info)
@@ -193,6 +233,7 @@ def setup_subcommands(argparser, subparsers):
     parser_members.set_defaults(handler = show_members)
     parser_remove.set_defaults(handler = remove_member)
     parser_rename.set_defaults(handler = rename_list)
+    parser_set.set_defaults(handler = set_flags)
 
 if __name__ == '__main__':
     client, args = common.init('mrlist', 'Inspect and modify Moira lists', setup_subcommands)
