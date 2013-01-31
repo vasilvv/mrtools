@@ -75,7 +75,7 @@ def last_modified_date(when):
 
 # ------------------------------------------------------------------------------
 
-def init(name, description, subparsers_generator):
+def init(name, description, arguments_generator):
     """Parses the command-line arguments, initializes the client and then returns both the client
     and the arguments."""
 
@@ -85,10 +85,9 @@ def init(name, description, subparsers_generator):
     argparser.add_argument('--version', action = 'version', version = get_version(name), help = 'Output program version and quit')
     argparser.add_argument('--no-color', action = 'store_true', help = 'Disable the color output')
     argparser.add_argument('-a', '--anonymous', action = 'store_true', help = 'Do not log into Moira')
-    subparsers = argparser.add_subparsers()
     
-    if subparsers_generator:
-        subparsers_generator(argparser, subparsers)
+    if arguments_generator:
+        arguments_generator(argparser)
     
     args = argparser.parse_args()
     

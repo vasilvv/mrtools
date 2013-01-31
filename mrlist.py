@@ -221,8 +221,10 @@ def set_memacl():
     mlist.setMembershipACL(new_memacl)
     print "Successfully changed membership ACL of list %s to %s" % (common.emph_text(args.list), common.emph_text(str(new_memacl)))
 
-def setup_subcommands(argparser, subparsers):
+def setup_subcommands(argparser):
     """Sets up all the subcommands."""
+
+    subparsers = argparser.add_subparsers()
 
     parser_add = subparsers.add_parser('add', help = 'Add a member to the list')
     parser_add.add_argument('list', help = 'The list to which the member will be added')
