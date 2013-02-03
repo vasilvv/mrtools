@@ -88,16 +88,19 @@ def init(name, description, arguments_generator):
     argparser.add_argument('--version', action = 'version', version = get_version(name), help = 'Output program version and quit')
     argparser.add_argument('--no-color', action = 'store_true', help = 'Disable the color output')
     argparser.add_argument('-a', '--anonymous', action = 'store_true', help = 'Do not log into Moira')
+    argparser.add_argument('-C', '--client-name', help = 'Moira client name' )
     
     if arguments_generator:
         arguments_generator(argparser)
     
     args = argparser.parse_args()
+
+    client_name = args.client_name if args.client_name else name
     
     try:
         client = pymoira.Client()
         if not args.anonymous:
-            client.authenticate(name)
+            client.authenticate(client_name)
 
         return client, args
     except pymoira.BaseError as err:
