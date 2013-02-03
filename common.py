@@ -73,6 +73,9 @@ def last_modified_date(when):
         else:
             return plural(delta.seconds, "second", "seconds")
 
+def error(s):
+    sys.stderr.write( "%s\n" % s )
+
 # ------------------------------------------------------------------------------
 
 def init(name, description, arguments_generator):
@@ -98,7 +101,7 @@ def init(name, description, arguments_generator):
 
         return client, args
     except pymoira.BaseError as err:
-        sys.stderr.write( "%s\n" % err )
+        error( err )
 
 def main():
     """Executes the relevant subcommand."""
@@ -106,4 +109,4 @@ def main():
     try:
         args.handler()
     except pymoira.BaseError as err:
-        sys.stderr.write( "%s\n" % err )
+        error( err )
