@@ -7,7 +7,7 @@
 #
 
 import common
-import re, argparse
+import re, argparse, json, sys
 
 import pymoira
 from pymoira import List, ListMember, ListTracer
@@ -221,6 +221,27 @@ def set_memacl():
     mlist.setMembershipACL(new_memacl)
     print "Successfully changed membership ACL of list %s to %s" % (common.emph_text(args.list), common.emph_text(str(new_memacl)))
 
+def do_snapshot():
+    """Handles 'mrlist snapshot'."""
+
+    target_lists = set(args.list)
+    if args.recursive:
+        for listname in target_lists.copy():
+            mlist = List(client, listname)
+            all_members, denied, known = mlist.getAllMembers(include_lists = True)
+            for member in all_members:
+                if member.mtype == ListMember.List:
+                    target_lists.add(member.name)
+
+    dumps = {}
+    for listname in target_lists:
+        mlist = List(client, listname)
+        try:
+            dumps[listname] = mlist.serialize()
+        except pymoira.MoiraError as err:
+            common.error("Unable to backup list %s: %s" % (listname, err))
+    json.dump(dumps, sys.stdout)
+
 def setup_subcommands(argparser):
     """Sets up all the subcommands."""
 
@@ -272,6 +293,10 @@ def setup_subcommands(argparser):
     parser_setmemacl.add_argument('list', help = 'List to change membership of')
     parser_setmemacl.add_argument('memacl', help = 'New membership ACL')
 
+    parser_snapshot = subparsers.add_parser('snapshot', help = 'Take a snapshot of the specified lists')
+    parser_snapshot.add_argument('-r', '--recursive', action = 'store_true', help = 'Dump all lists nested into the specified lists')
+    parser_snapshot.add_argument('list', nargs = '+', help = 'List to take the snapshot of')
+
     parser_add.set_defaults(handler = add_member)
     parser_expand.set_defaults(handler = expand_list)
     parser_info.set_defaults(handler = show_info)
@@ -283,6 +308,7 @@ def setup_subcommands(argparser):
     parser_setdesc.set_defaults(handler = set_desc)
     parser_setowner.set_defaults(handler = set_owner)
     parser_setmemacl.set_defaults(handler = set_memacl)
+    parser_snapshot.set_defaults(handler = do_snapshot)
 
 if __name__ == '__main__':
     client, args = common.init('mrlist', 'Inspect and modify Moira lists', setup_subcommands)
