@@ -310,6 +310,8 @@ def setup_subcommands(argparser):
     parser_setmemacl.set_defaults(handler = set_memacl)
     parser_snapshot.set_defaults(handler = do_snapshot)
 
+    argparser.epilog = 'This mrlist has Super Cow Resistance'
+
 if __name__ == '__main__':
     client, args = common.init('mrlist', 'Inspect and modify Moira lists', setup_subcommands)
     common.main()
