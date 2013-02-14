@@ -17,10 +17,13 @@ def section_header(text):
 
     print "---- %s ----" % text
 
+def use_color():
+    return sys.stdout.isatty() and not args.no_color
+
 def emph_text(text):
     """Make a text bold, unless the text formatting is disabled."""
 
-    if not args.no_color:
+    if use_color():
         return colorama.Style.BRIGHT + text + colorama.Style.RESET_ALL
     else:
         return text
@@ -28,7 +31,7 @@ def emph_text(text):
 def color_text(text, color_name):
     """Make the text of a specific color, unless the text formatting is disabled."""
 
-    if not args.no_color:
+    if use_color():
         return colorama.Fore.__dict__[color_name.upper()] + text + colorama.Style.RESET_ALL
     else:
         return text
