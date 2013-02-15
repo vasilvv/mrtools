@@ -259,10 +259,10 @@ def setup_subcommands(argparser):
     parser_expand.add_argument('-v', '--verbose', action = 'store_true', help = 'Do not hide the inclusion pathways even if there are many of them')
 
     parser_info = subparsers.add_parser('info', help = 'Provide the information about the list')
-    parser_info.add_argument('list', help = 'User, Kerberos principal or ')
+    parser_info.add_argument('list', help = 'The list to inspect')
 
     parser_inverse = subparsers.add_parser('inverse', help = 'Show the lists into which certain member is included')
-    parser_inverse.add_argument('member', help = 'The name of the list to show information about')
+    parser_inverse.add_argument('member', help = 'The name of the member to show information about')
     parser_inverse.add_argument('-r', '--recursive', action = 'store_true', help = 'Show the lists into which a member is included through other lists')
 
     parser_members = subparsers.add_parser('members', help = 'Shows the members explicitly included into the list')
