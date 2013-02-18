@@ -57,6 +57,7 @@ def show_help():
         query = args.arg[0]
     except IndexError:
         common.error( "Query name was not specified" )
+        return
 
     info, = client.query('_help', (query,))
     print ' '.join(info).strip()
