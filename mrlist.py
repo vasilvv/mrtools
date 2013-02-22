@@ -67,8 +67,8 @@ def show_info():
         ('AFS group', "GID #%s" % mlist.gid if mlist.is_afsgroup else mlist.is_afsgroup),
         ('Unix group', mlist.is_nfsgroup) if mlist.is_afsgroup else None,
         ('Mailman list', "On server %s" % mlist.mailman_server if mlist.is_mailman_list else mlist.is_mailman_list),
-        ('Owner', "%s %s" % (mlist.owner_type.lower(), mlist.owner_name) ),
-        ('Membership ACL', "%s %s" % (mlist.memacl_type.lower(), mlist.memacl_name) if mlist.memacl_type != 'NONE' else 'None' ),
+        ('Owner', str(mlist.owner) ),
+        ('Membership ACL', str(mlist.memacl) if mlist.memacl else 'None' ),
         ('Last modified', "%s ago by %s using %s" % (common.last_modified_date(mlist.lastmod_datetime), mlist.lastmod_by, mlist.lastmod_with)),
     )
 
