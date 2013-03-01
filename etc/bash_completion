@@ -1,0 +1,49 @@
+MRTOOLS_OPTS_COMMON="-h --help --version --no-color -a --anonymous -C --client-name"
+
+_mrtools_core()
+{
+	local cur cmds cmds_in
+
+	COMPREPLY=()
+	cur=${COMP_WORDS[COMP_CWORD]}
+
+	cmds="$MRTOOLS_CMDS"
+
+	# This is array intersection implemented in bash. I probably do it Wrong,
+	# but this is a script in *bash*, so please have mercy on me.
+	cmds_in=$( comm -12 <(echo "${cmds[@]}" | sed -e's/ /\n/g' | sort) <(echo "${COMP_WORDS[@]}" | sed -e's/ /\n/g' | sort) )
+
+	if [[ -z "$cmds_in" ]]; then
+		if [[ "$cur" =~ -.* ]]; then
+			COMPREPLY=( $( compgen -W "$MRTOOLS_OPTS_COMMON" -- $cur ) );
+		else
+			COMPREPLY=( $( compgen -W "$cmds" -- $cur ) );
+		fi
+	fi
+	
+	return 0
+
+}
+
+_mrlist()
+{
+	MRTOOLS_CMDS="add expand info inverse members ownerships remove rename set setdesc setowner setmemacl snapshot"
+	_mrtools_core
+}
+
+_mrfilesys()
+{
+	MRTOOLS_CMDS="info"
+	_mrtools_core
+}
+
+_mruser()
+{
+	MRTOOLS_CMDS="info ownerships"
+	_mrtools_core
+}
+
+complete -F _mrlist mrlist
+complete -F _mrfilesys mrfilesys
+complete -F _mruser mruser
+
