@@ -108,6 +108,7 @@ def init(name, description, arguments_generator):
         return client, args
     except pymoira.BaseError as err:
         error( err )
+        sys.exit(1)
 
 def main():
     """Executes the relevant subcommand."""
