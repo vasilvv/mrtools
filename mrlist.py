@@ -18,8 +18,6 @@ def resolve_member(name, default_to_string):
     member = ListMember.resolveName(client, name)
     if member:
         return member
-    if re.match( "^[a-z0-9_]{3,8}.(root|extra|dbadmin)$", name ):
-        return ListMember( client, ListMember.Kerberos, name + '@ATHENA.MIT.EDU' )
     
     if default_to_string:
         return ListMember( client, ListMember.String, name )
