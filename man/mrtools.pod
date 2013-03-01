@@ -1,0 +1,66 @@
+=encoding utf8
+
+=head1 NAME
+
+mrtools - set of modern Moira client programs
+
+=head1 DESCRIPTION
+
+mrtools are set of command line utilities created to provide access to different
+aspects of Moira Service Management System. They include:
+
+=over 4
+
+=item B<mrlist>
+
+Allows to do all sort of lookups and modifications of Moira lists, like
+adding members, removing members, expanding all nested sublists, etc.
+
+=item B<mrfilesys>
+
+Allows to lookup information about Moira filesystems.
+
+=item B<mruser>
+
+Allows to lookup basic information about users.
+
+=item B<mrquery>
+
+Allows to send raw queries to Moira.
+
+=back
+
+=head1 COMMON OPTIONS
+
+=over 4
+
+=item B<--help>
+
+Displays help information about the program. Note that for information about
+suboptions, you need to write C<command subcommand --help>, e.g.
+C<mrlist expand --help>.
+
+=item B<--version>
+
+Display the version of the program.
+
+=item B<-a, --anonymous>
+
+Do not identify yourself to the Moira server using Kerberos.
+
+=item B<-C, --client-name>
+
+Present youself to the Moira server using specified client name instead of
+real one.
+
+=item B<--no-color>
+
+Do not use colors when outputting to the terminal.
+
+=back
+
+=head1 LIMITATIONS
+
+This set of tools contains primarily the operations which require little or no
+special access to the Moira database. In particular, only list editing is implemented.
+
