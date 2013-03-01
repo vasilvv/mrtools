@@ -10,7 +10,7 @@
 #
 
 from pymoira import User
-import common
+import common, ownership
 import colorama
 
 def format_user_status(user):
@@ -73,6 +73,12 @@ def show_info():
         ('Last modified', "%s by %s using %s" % (common.last_modified_date(user.lastmod_datetime), user.lastmod_by, user.lastmod_with)),
     )
 
+def show_ownerships():
+    """Handle 'mruser ownerships'."""
+
+    user = User(client, args.user)
+    ownership.show_ownerships(client, args, user)
+
 def setup_subcommands(argparser):
     """Sets up all the subcommands."""
 
@@ -80,8 +86,13 @@ def setup_subcommands(argparser):
 
     parser_info = subparsers.add_parser('info', help = 'Provide the information about the user')
     parser_info.add_argument('user', help = 'The user to inspect')
+
+    parser_ownerships = subparsers.add_parser('ownerships', help = 'Show items which this user owns')
+    parser_ownerships.add_argument('user', help = 'The name of the user to show information about')
+    parser_ownerships.add_argument('-r', '--recursive', action = 'store_true', help = 'Show items which this user own through being in lists')
   
     parser_info.set_defaults(handler = show_info)
+    parser_ownerships.set_defaults(handler = show_ownerships)
 
 if __name__ == '__main__':
     client, args = common.init('mruser', 'Inspect Moira users', setup_subcommands)

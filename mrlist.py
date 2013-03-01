@@ -6,7 +6,7 @@
 ## This program provides an interface to read and manipulate Moira lists.
 #
 
-import common
+import common, ownership
 import re, argparse, json, sys
 
 import pymoira
@@ -129,6 +129,12 @@ def expand_list():
         output_member_list(members, show_trace)
     else:
         output_member_list(members)
+
+def show_ownerships():
+    """Handle 'mrlist ownerships'."""
+
+    mlist = List(client, args.list)
+    ownership.show_ownerships(client, args, mlist)
 
 def add_member():
     """Handle 'mrlist add'."""
@@ -269,6 +275,10 @@ def setup_subcommands(argparser):
     parser_members.add_argument('list', help = 'The name of the list to show information about')
     parser_members.add_argument('-v', '--verbose', action = 'store_true', help = 'Output explicitly the members of the list')
 
+    parser_ownerships = subparsers.add_parser('ownerships', help = 'Show items which this list owns')
+    parser_ownerships.add_argument('list', help = 'The name of the list to show information about')
+    parser_ownerships.add_argument('-r', '--recursive', action = 'store_true', help = 'Show items which this list own through being in other lists')
+
     parser_remove = subparsers.add_parser('remove', help = 'Remove a member from the list')
     parser_remove.add_argument('list', help = 'The list from which the member will be removed')
     parser_remove.add_argument('member', help = 'The member to remove from the list')
@@ -302,6 +312,7 @@ def setup_subcommands(argparser):
     parser_info.set_defaults(handler = show_info)
     parser_inverse.set_defaults(handler = show_inverse)
     parser_members.set_defaults(handler = show_members)
+    parser_ownerships.set_defaults(handler = show_ownerships)
     parser_remove.set_defaults(handler = remove_member)
     parser_rename.set_defaults(handler = rename_list)
     parser_set.set_defaults(handler = set_flags)
