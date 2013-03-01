@@ -7,7 +7,7 @@
 #
 
 import common, ownership
-import re, argparse, json, sys
+import re, argparse, json, sys, datetime
 
 import pymoira
 from pymoira import List, ListMember, ListTracer
@@ -150,6 +150,14 @@ def remove_member():
     mlist.removeMember(member)
     print "Removed %s from list %s" % (common.emph_text( str(member) ), common.emph_text( mlist.name ))
 
+    if args.reason:
+        date = datetime.datetime.now().strftime("%d %b %Y")
+        comment_params = (member.name.replace("@", " at "), args.reason, date, common.user_name())
+        comment = "<devnull> %s removed due to %s %s (%s)" % comment_params
+        commentholder = ListMember(client, ListMember.String, comment)
+        mlist.addMember(commentholder)
+        print "Added commment entry %s" % common.emph_text(comment)
+
 def rename_list():
     """Handle 'mrlist rename'."""
 
@@ -280,6 +288,7 @@ def setup_subcommands(argparser):
     parser_remove = subparsers.add_parser('remove', help = 'Remove a member from the list')
     parser_remove.add_argument('list', help = 'The list from which the member will be removed')
     parser_remove.add_argument('member', help = 'The member to remove from the list')
+    parser_remove.add_argument('-r', '--reason', help = "Add a string entry exlaining the removal")
 
     parser_rename = subparsers.add_parser('rename', help = 'Rename a list')
     parser_rename.add_argument('old_name')

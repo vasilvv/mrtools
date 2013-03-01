@@ -2,7 +2,7 @@
 ## mrtools shared code
 #
 
-import datetime, colorama, argparse, sys
+import datetime, colorama, argparse, sys, os, getpass
 import pymoira
 
 mrtools_version = '0.1'
@@ -55,6 +55,18 @@ def plural(num, one, many):
     may be both in singular and in plural form."""
 
     return "%i %s" % (num, one if num == 1 else many)
+
+def user_name():
+    """Returns user name based on the best guess it can."""
+
+    # Theoretically, we should be using Kerberos principal name for this.
+    # However, Python Kerberos API bindings (both kerberos and krb5 modules)
+    # are broken to the extent that one does not return the username, and other
+    # has sad API, so we have to use other venues.
+
+    if "ATHENA_USER" in os.environ:
+        return os.environ["ATHENA_USER"]
+    return getpass.getuser()
 
 def last_modified_date(when):
     """Formats the last modification date in a human-readable format."""
