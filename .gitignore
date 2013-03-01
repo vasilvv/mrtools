@@ -34,3 +34,10 @@ nosetests.xml
 .project
 .pydevproject
 
+# Vim
+*~
+*.swp
+
+# Formatted man pages
+man/*.1
+
