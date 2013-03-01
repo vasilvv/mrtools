@@ -105,12 +105,28 @@ rest of the groups are truncated.
 
 =back
 
+=item B<setdesc> I<list> I<description>
+
+Updates the description of the list.
+
+=item B<setowner> I<list> I<owner>
+
+Changes the owner of the list. The owner of the list has full control over the list
+and may change membership, rename it or change other settings.
+
+=item B<setmemacl> I<list> I<memacl>
+
+Changes the membership ACL of the list. Membership ACL can add and remove members
+but cannot change other list settings.
+
+=item B<snapshot> [-r] I<list> [I<list> ...]
+
+Records the information about the lists into a machine-readable lists. If I<-r>
+is set, not only specified lists are recorded, but also the lists nested in them.
+
 =back
 
 =head1 SEE ALSO
 
 L<mrtools(1)>, L<blanche(1)>
-
-
-
 
