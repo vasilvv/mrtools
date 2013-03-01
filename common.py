@@ -5,7 +5,7 @@
 import datetime, colorama, argparse, sys, os, getpass
 import pymoira
 
-mrtools_version = '0.1'
+mrtools_version = '0.9'
 
 def get_version(program):
     """Return the displayable version of the program"""
