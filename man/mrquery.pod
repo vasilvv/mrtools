@@ -1,0 +1,31 @@
+=encoding utf8
+
+=head1 NAME
+
+mrquery - evaluate a raw Moira query
+
+=head1 DESCRIPTION
+
+This program accepts a Moira query handle as the first argument,
+and the query arguments as the rest of the arguments. Then it
+retrieves the query signature from the server, validates the
+query format and formats the output using the information from
+the signature.
+
+There are also special requests B<_help>, B<_list_queries> and
+B<_list_users>.
+
+=head1 OPTIONS
+
+=over 4
+
+=item B<-j, --json>
+
+Output the query results in a machine-readable format.
+
+=back
+
+=head1 SEE ALSO
+
+L<mrtools(1)>
+

@@ -59,6 +59,10 @@ Do not use colors when outputting to the terminal.
 
 =back
 
+=head1 SEE ALSO
+
+L<mrlist(1)>, L<mrfilesys(1)>, L<mruser(1)>, L<mrquery(1)>, L<moira(1)>
+
 =head1 LIMITATIONS
 
 This set of tools contains primarily the operations which require little or no

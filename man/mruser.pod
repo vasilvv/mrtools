@@ -1,0 +1,32 @@
+=encoding utf8
+
+=head1 NAME
+
+mruser - provide information about a user
+
+=head1 DESCRIPTION
+
+I<mruser> is a tool which provides access to the basic information about users
+which is accessible through Moira.
+
+=head1 COMMANDS
+
+=over 4
+
+=item B<info> I<name>
+
+Retrieve the information about the given user account.
+
+=item B<ownerships> I<[-r]> I<name>
+
+List all the items which the user owns. If the I<-r> flag is specified,
+the items which user own through membership in lists are also displated.
+
+=back
+
+=head1 SEE ALSO
+
+L<mrtools(1)>, L<stanley(1)>
+
+
+

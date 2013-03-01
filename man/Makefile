@@ -1,7 +1,7 @@
-FILES=mrtools.1
+FILES=mrtools.1 mrquery.1 mrfilesys.1 mruser.1 mrlist.1
 SOURCES=$(FILES:.1=.pod)
 
-POD2MAN=pod2man --center "mrtools Moira client toolkit" --release "mrtools"
+POD2MAN=pod2man --center "" --release "mrtools"
 
 %.1: %.pod
 	$(POD2MAN) $< > $@

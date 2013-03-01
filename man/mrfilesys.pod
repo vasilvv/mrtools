@@ -1,0 +1,27 @@
+=encoding utf8
+
+=head1 NAME
+
+mrfilesys - provide information about a filesystem
+
+=head1 DESCRIPTION
+
+Moira filesystems are entries in the Moira database which
+are transformed into Hesiod entries and mounted through /mit automounter.
+They are also used to manage the locker quotas.
+
+=head1 COMMANDS
+
+=over 4
+
+=item B<info> I<name>
+
+Retrieve the information about the given filesystem and the related quota.
+
+=back
+
+=head1 SEE ALSO
+
+L<mrtools(1)>
+
+
