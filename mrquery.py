@@ -18,13 +18,13 @@ class QueryInfo:
         # FIXME: the format Moira server uses is horrible.
         # There should be a saner way to do this
         description = ' '.join(info)
-        match = re.match( r"\s*(\S+), (\S+) \((.+)\) => (.+)", description )
+        match = re.match( r"\s*(\S+), (\S+) \((.+)\)( => (.+))?", description )
         if not match:
             raise pymoira.UserError( "Unable to parse the Moira query description" )
 
-        self.name, self.shortname, inputs, outputs = match.groups()
+        self.name, self.shortname, inputs, output_whole, outputs = match.groups()
         self.inputs = inputs.split(' ')
-        self.outputs = outputs.split(' ')
+        self.outputs = outputs.split(' ') if outputs else []
 
 def setup_arguments(argparser):
     """Sets up the arguments."""
