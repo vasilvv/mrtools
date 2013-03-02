@@ -11,5 +11,5 @@ GZIP=gzip
 all: $(GZFILES)
 
 clean:
-	rm -f $(FILES)
+	rm -f $(GZFILES)
 
