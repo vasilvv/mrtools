@@ -1,0 +1,4 @@
+usr/share/mrtools/mrfilesys.py usr/bin/mrfilesys
+usr/share/mrtools/mrlist.py usr/bin/mrlist
+usr/share/mrtools/mrquery.py usr/bin/mrquery
+usr/share/mrtools/mruser.py usr/bin/mruser

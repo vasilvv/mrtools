@@ -1,0 +1,7 @@
+common.py usr/share/mrtools
+mrfilesys.py usr/share/mrtools
+mrlist.py usr/share/mrtools
+mrquery.py usr/share/mrtools
+mruser.py usr/share/mrtools
+ownership.py usr/share/mrtools
+
