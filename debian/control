@@ -1,0 +1,14 @@
+Source: debathena-mrtools
+Maintainer: Victor Vasiliev <vasilvv@mit.edu>
+Section: debathena/net
+Priority: optional
+Build-Depends: python-all (>= 2.6.6-3), debhelper (>= 7)
+Standards-Version: 3.9.1
+
+Package: debathena-mrtools
+Architecture: all
+Depends: ${misc:Depends}, ${python:Depends}, python-pymoira, python-colorama
+Description: Client software for Moira Service Management System
+ mrtools are a set of Moira clients which are written around pymoira
+ library. They were created with an aim to provide functionality standard
+ clients did not provide and improve user experience.
