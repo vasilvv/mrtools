@@ -26,6 +26,8 @@ def format_user_status(user):
         8  : ('Registered -- Kerberos-only',  'yellow',  False),
         9  : ('Active -- Kerberos-only',      'yellow',  False),
         10 : ('Supsended',                    'red',     True ),
+        11 : ('Expired',                      'red',     True ),
+        12 : ('Expired -- Kerberos-only',     'red',     True ),
     }
 
     if user.status not in statuses:
